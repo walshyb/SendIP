@@ -1,5 +1,6 @@
 import mandrill
 import socket
+from sys import argv
 
 REMOTE_SERVER = "www.google.com"
 
@@ -17,21 +18,19 @@ def is_connected():
      pass
   return False
 
-
-if is_connected():   #If there is internet connection, email IP address
-
-    mandrill_client = mandrill.Mandrill('Mandrill API Key')
+def send_mail():
+    mandrill_client = mandrill.Mandrill('q-bmV3TPtO8K_Wa9pWVfuA')
 
     try:
         message = {
-         'bcc_address': 'to_email@example.com',
-         'from_email': 'from_email@example.com',
+         'bcc_address': 'walshb1@hawkmail.newpaltz.edu',
+         'from_email': 'walshb1@hawkmail.newpaltz.edu',
          'from_name': 'Brandon Walsh',
-         'to': [{'email': 'to_email@example.com',
+         'to': [{'email': 'walshb1@hawkmail.newpaltz.edu',
                  'name': 'Recipient Name',
                  'type': 'to'}],
          'html': '<p>' +  socket.gethostbyname(socket.gethostname()) + '</p>',
-         'subject': 'Subject here'
+         'subject': 'RPi IP'
          };
          
         result = mandrill_client.messages.send(message=message, async=False, ip_pool='', send_at='')
@@ -43,6 +42,24 @@ if is_connected():   #If there is internet connection, email IP address
         print 'A mandrill error occurred: %s - %s' % (e.__class__, e)
         # A mandrill error occurred: <class 'mandrill.UnknownSubaccountError'> - No subaccount exists with the id 'customer-123'    
         raise
+
+
+if is_connected():   #If there is internet connection, email IP address to myself
+
+    txt = open('ip.txt')
+    current_ip = socket.gethostbyname(socket.gethostname())
+
+    if txt.readline() == '': #if the txt file does not have an IP (is empty)
+        txt = open('ip.txt', "w")
+        txt.write(current_ip)
+        txt.close()
+    else:
+        txt = open('ip.txt')
+        file_ip = txt.readline()
+
+        if file_ip != current_ip: #if last saved IP is different than current IP
+            send_mail()
+    
 else:
     print 'Please make sure you have an internet connection established.  '
 
