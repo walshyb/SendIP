@@ -53,6 +53,8 @@ if is_connected():   #If there is internet connection, email IP address to mysel
         txt = open('ip.txt', "w")
         txt.write(current_ip)
         txt.close()
+
+        send_mail()
     else:
         txt = open('ip.txt')
         file_ip = txt.readline()
@@ -67,9 +69,6 @@ if is_connected():   #If there is internet connection, email IP address to mysel
 
             send_mail()
 
-
-    
 else:
     print 'Please make sure you have an internet connection established.'
-
    
