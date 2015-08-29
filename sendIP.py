@@ -19,14 +19,14 @@ def is_connected():
   return False
 
 def send_mail():
-    mandrill_client = mandrill.Mandrill('q-bmV3TPtO8K_Wa9pWVfuA')
+    mandrill_client = mandrill.Mandrill('Your Mandrill API key')
 
     try:
         message = {
-         'bcc_address': 'walshb1@hawkmail.newpaltz.edu',
-         'from_email': 'walshb1@hawkmail.newpaltz.edu',
+         'bcc_address': 'email@example.com',
+         'from_email': 'email@example.com',
          'from_name': 'Brandon Walsh',
-         'to': [{'email': 'walshb1@hawkmail.newpaltz.edu',
+         'to': [{'email': 'email@example.com',
                  'name': 'Recipient Name',
                  'type': 'to'}],
          'html': '<p>' +  socket.gethostbyname(socket.gethostname()) + '</p>',
