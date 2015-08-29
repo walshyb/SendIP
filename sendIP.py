@@ -58,9 +58,18 @@ if is_connected():   #If there is internet connection, email IP address to mysel
         file_ip = txt.readline()
 
         if file_ip != current_ip: #if last saved IP is different than current IP
+            print 'Old IP Address:' + file_ip
+            print 'Current IP Address' + current_ip
+
+            txt = open('ip.txt', "w")
+            txt.write(current_ip)
+            txt.close()
+
             send_mail()
+
+
     
 else:
-    print 'Please make sure you have an internet connection established.  '
+    print 'Please make sure you have an internet connection established.'
 
    
